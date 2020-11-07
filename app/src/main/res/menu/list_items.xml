@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Speed &amp; Distance">
+        <group>
+            <menu>
+                <item
+                    android:id="@+id/length"
+                    android:icon="@drawable/ic_measuring_tape"
+                    android:title="Length" />
+                <item
+                    android:id="@+id/speed"
+                    android:icon="@drawable/ic_stopwatch"
+                    android:title="Speed" />
+            </menu>
+        </group>
+        </item>
+
+
+    <item android:title="Force &amp; Mass">
+        <group>
+            <menu>
+                <item
+                    android:id="@+id/weight"
+                    android:icon="@drawable/ic_kitchen_scale"
+                    android:title="Weight" />
+                <item
+                    android:id="@+id/force"
+                    android:icon="@drawable/ic_force"
+                    android:title="Force" />
+
+            </menu>
+        </group>
+    </item>
+    <item android:title="Temperature &amp; Pressure">
+        <group>
+            <menu>
+                <item
+                    android:id="@+id/temperature"
+                    android:icon="@drawable/ic_thermometer"
+                    android:title="Temperature" />
+                <item
+                    android:id="@+id/pressure"
+                    android:icon="@drawable/ic_manometer"
+                    android:title="Pressure" />
+            </menu>
+        </group>
+    </item>
+
+    <item android:title="Volume &amp; Area">
+        <group>
+            <menu>
+                <item
+                    android:id="@+id/area"
+                    android:icon="@drawable/ic_select"
+                    android:title="Area" />
+                <item
+                    android:id="@+id/volume"
+                    android:icon="@drawable/ic_flask"
+                    android:title="Volume" />
+            </menu>
+        </group>
+    </item>
+
+    <item android:title="About Us">
+            <menu>
+                <item
+                    android:id="@+id/about"
+                    android:icon="@drawable/ic_manager"
+                    android:title="About"/>
+            </menu>
+    </item>
+
+</menu>

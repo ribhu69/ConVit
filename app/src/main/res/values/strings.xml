@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">ConVit</string>
+    <string name="open">Drawer Open</string>
+    <string name="close">Drawer Closed</string>
+
+    <string name="text_with_paragraphs">
+
+        Convit is a simple ad-free Unit Conversion App.
+        Choose your desired Unit Conversion from the Drawer On the Left.
+    </string>
+    <string name="about"> App Developer: Arkaprava Ghosh \nVer:1.0 \nLanguage: Kotlin </string>
+
+    <string name="hello_blank_fragment">hello_blank_fragment </string>
+
+    <string-array name="Length">
+        <item>kmph -> mph</item>
+        <item>kmph -> ms</item>
+    </string-array>
+</resources>
