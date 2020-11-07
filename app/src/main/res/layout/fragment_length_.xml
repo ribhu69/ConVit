@@ -32,10 +32,11 @@
         app:layout_constraintVertical_bias="0.159" />
 
     <EditText
-        android:id="@+id/input_editText"
+        android:id="@+id/lengthInput"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:hint="Enter Value Here"
+        android:inputType="number"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -44,17 +45,19 @@
         tools:layout_editor_absoluteX="16dp" />
 
     <TextView
-        android:id="@+id/output_text"
+        android:id="@+id/lengthOutput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/gothicb"
-        android:text="Length"
+        android:text="Answer"
+
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.089"
+        app:layout_constraintHorizontal_bias="0.462"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.608" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

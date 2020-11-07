@@ -13,7 +13,7 @@
     <string name="hello_blank_fragment">hello_blank_fragment </string>
 
     <string-array name="Length">
-        <item>kmph -> mph</item>
         <item>kmph -> ms</item>
+        <item>ms -> kmph</item>
     </string-array>
 </resources>
