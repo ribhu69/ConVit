@@ -1,10 +1,10 @@
 package com.example.android.convunit
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -80,21 +80,19 @@ class MainActivity : AppCompatActivity() {
                 R.id.area ->//
                 {
                     Toast.makeText(applicationContext, "Area", Toast.LENGTH_SHORT).show()
-                    areaFragment= Area_Fragment()
+                    areaFragment = Area_Fragment()
                     addFragmentToActivity(areaFragment)
                 }
-                R.id.volume ->
-                {
+                R.id.volume -> {
                     Toast.makeText(applicationContext, "Volume", Toast.LENGTH_SHORT).show()
-                    volumeFragment= Volume_Fragment()
+                    volumeFragment = Volume_Fragment()
                     addFragmentToActivity(volumeFragment)
                 }
-                R.id.about ->
-                    {
-                        //Toast.makeText(applicationContext, "Volume", Toast.LENGTH_SHORT).show()
-                        aboutFragment= About_Fragment()
-                        addFragmentToActivity(aboutFragment)
-                    }
+                R.id.about -> {
+                    //Toast.makeText(applicationContext, "Volume", Toast.LENGTH_SHORT).show()
+                    aboutFragment = About_Fragment()
+                    addFragmentToActivity(aboutFragment)
+                }
             }
             drawer_layout.closeDrawer(GravityCompat.START)
             true
@@ -129,4 +127,3 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
-
