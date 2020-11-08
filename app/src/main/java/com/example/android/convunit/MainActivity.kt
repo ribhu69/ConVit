@@ -1,7 +1,10 @@
 package com.example.android.convunit
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -23,8 +26,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pressureFragment: Pressure_Fragment
     private lateinit var areaFragment: Area_Fragment
     private lateinit var volumeFragment: Volume_Fragment
-
-
+    private lateinit var homeFragment: Home_Fragment
+    private lateinit var hello: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,20 +40,26 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true) //when our drawer opens the logo changes to left arrow
 
+        hello = findViewById(R.id.hello)
+        hello.setOnClickListener(View.OnClickListener {
+            Toast.makeText(applicationContext, "Length", Toast.LENGTH_SHORT).show()
+            lengthFragment = LengthFragment()
+            addFragmentToActivity(lengthFragment)
+        })
 
 
         nav_view.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.length -> //
                 {
-                    Toast.makeText(applicationContext, "Length", Toast.LENGTH_SHORT) .show()
-                    lengthFragment= LengthFragment()
+                    Toast.makeText(applicationContext, "Length", Toast.LENGTH_SHORT).show()
+                    lengthFragment = LengthFragment()
                     addFragmentToActivity(lengthFragment)
                 }
                 R.id.speed -> //
                 {
                     Toast.makeText(applicationContext, "Speed", Toast.LENGTH_SHORT).show()
-                    speedFragment= Speed_Fragment()
+                    speedFragment = Speed_Fragment()
                     addFragmentToActivity(speedFragment)
                 }
                 R.id.weight -> //
@@ -74,7 +83,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.force -> //
                 {
                     Toast.makeText(applicationContext, "Force", Toast.LENGTH_SHORT).show()
-                    forceFragment= Force_Fragment()
+                    forceFragment = Force_Fragment()
                     addFragmentToActivity(forceFragment)
                 }
                 R.id.area ->//
@@ -99,21 +108,52 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addFragmentToActivity(fragment: Fragment)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.list_actionbar, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.homeIcon -> {
+                Toast.makeText(this, "Yo boii", Toast.LENGTH_SHORT).show()
+                mainFrame.visibility = View.INVISIBLE
+                homeLayout.visibility = View.VISIBLE
+
+                true
+            }
+            R.id.aboutUs -> {
+                homeLayout.visibility = View.INVISIBLE
+                mainFrame.visibility = View.VISIBLE
+                homeFragment = Home_Fragment()
+                addFragmentToActivity(homeFragment)
+                Toast.makeText(this, "About Us", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
+    }
+
+
+    /*private fun addFragmentToActivity(fragment: Fragment)
     {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.main_fragment,fragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
+    }*/
+    fun addFragmentToActivity(fragment: Fragment) {
+        homeLayout.visibility = View.INVISIBLE
+        mainFrame.visibility = View.VISIBLE
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.mainFrame, fragment)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .commit()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (toggle.onOptionsItemSelected(item)) {
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onBackPressed() {
 
@@ -125,5 +165,6 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+
 
 }

@@ -12,13 +12,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <fragment
-            android:id="@+id/main_fragment"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/homeLayout"
             android:layout_width="match_parent"
-            android:name="com.example.android.convunit.Home_Fragment"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:visibility="visible">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/hello"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hello"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:id="@+id/mainFrame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            tools:layout_editor_absoluteX="1dp">
+
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         app:headerLayout="@layout/nav_header"
