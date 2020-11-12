@@ -8,4 +8,9 @@ ConVit is a Unit Conversion App Written in Kotlin Language. The app is more focu
   - TextWatcher Implementation to eliminate buttons for conversions.
 
 # App Status
-Currently the app is in initial stage and has many changes expected in near future.
+  - Textwatcher implemented Successfully
+  - Drawer functionality added
+  - All fragments added (spinners remaining)
+  - Action Bar Items added
+
+The app is in beta and will undergo numerous changes.
