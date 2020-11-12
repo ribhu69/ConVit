@@ -1,59 +1,106 @@
 package com.example.android.convunit
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
+import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.fragment_speed_.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class SpeedFragment : Fragment() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [Speed_Fragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class Speed_Fragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var input: EditText
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_speed_, container, false)
-    }
+        val root = inflater.inflate(R.layout.fragment_speed_, container, false)
+        val spinner: Spinner = root.findViewById(R.id.speed_input_spinner)
+        val reset = root.findViewById<Button>(R.id.speedreset)
+        reset.isEnabled = false
+        reset.isClickable = false
+        reset.setBackgroundColor(Color.parseColor("#ABB8C7"))
+        ArrayAdapter.createFromResource(
+            context!!, R.array.Speed, android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Speed_Fragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Speed_Fragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        reset.setOnClickListener {
+            if (reset.isEnabled) {
+                speedInput.text.clear()
+            }
+        }
+        input = root.findViewById(R.id.speedInput)
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                //nothing
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                speedInput.setText("")
+            }
+
+        }
+        input.addTextChangedListener(object : TextWatcher {
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                speedOutput.text = "None"
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if ((speedInput.text).toString() != "") {
+                    when (speed_input_spinner.selectedItem.toString()) {
+                        "kmph->ms" -> {
+
+                            reset.isEnabled = true
+                            reset.isClickable = true
+                            reset.setBackgroundColor(Color.parseColor("#485461"))
+                            var ans = speedInput.text.toString().toDouble()
+                            ans /= 3.6
+                            speedOutput.text = ("%.4f".format(ans)) + " ms"
+                            speedOutput.visibility = View.VISIBLE
+                        }
+                        "ms->kmph" -> {
+                            reset.isEnabled = true
+                            reset.isClickable = true
+                            reset.setBackgroundColor(Color.parseColor("#485461"))
+                            var ans = speedInput.text.toString().toDouble()
+                            ans *= 3.6
+                            speedOutput.text = ("%.2f".format(ans)) + " kmph"
+                            speedOutput.visibility = View.VISIBLE
+
+                        }
+                        else -> {
+
+                            speedOutput.text = "None"
+                            speedOutput.visibility = View.VISIBLE
+                        }
+                    }
+                } else {
+                    reset.isEnabled = false
+                    reset.isClickable = false
+                    reset.setBackgroundColor(Color.parseColor("#ABB8C7"))
                 }
             }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // left blank intentionally
+            }
+
+        })
+        return root
     }
 }

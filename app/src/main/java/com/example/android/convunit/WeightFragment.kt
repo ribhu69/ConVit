@@ -1,59 +1,117 @@
 package com.example.android.convunit
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
+import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.fragment_weight_.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [Weight_Fragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class Weight_Fragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class WeightFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var input: EditText
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_weight_, container, false)
-    }
+        val root = inflater.inflate(R.layout.fragment_weight_, container, false)
+        val spinner: Spinner = root.findViewById(R.id.weight_input_spinner)
+        val reset = root.findViewById<Button>(R.id.weightreset)
+        reset.isEnabled = false
+        reset.isClickable = false
+        reset.setBackgroundColor(Color.parseColor("#ABB8C7"))
+        ArrayAdapter.createFromResource(
+            context!!, R.array.Weight, android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Weight_Fragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Weight_Fragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        reset.setOnClickListener {
+            if (reset.isEnabled) {
+                weightInput.text.clear()
+            }
+        }
+        input = root.findViewById(R.id.weightInput)
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                //nothing
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                weightInput.setText("")
+            }
+
+        }
+        input.addTextChangedListener(object : TextWatcher {
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                weightOutput.text = "None"
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if ((weightInput.text).toString() != "") {
+                    when (weight_input_spinner.selectedItem.toString()) {
+                        "kg->g" -> {
+
+                            reset.isEnabled = true
+                            reset.isClickable = true
+                            reset.setBackgroundColor(Color.parseColor("#485461"))
+                            var ans = weightInput.text.toString().toDouble()
+                            ans *= 1000
+                            weightOutput.text = ("%.4f".format(ans)) + " g"
+                            weightOutput.visibility = View.VISIBLE
+                        }
+                        "pound->kg" -> {
+                            reset.isEnabled = true
+                            reset.isClickable = true
+                            reset.setBackgroundColor(Color.parseColor("#485461"))
+                            var ans = weightInput.text.toString().toDouble()
+                            ans *= 0.453592
+                            weightOutput.text = ("%.2f".format(ans)) + " kg"
+                            weightOutput.visibility = View.VISIBLE
+
+                        }
+                        "quintal->pound" -> {
+                            reset.isEnabled = true
+                            reset.isClickable = true
+                            reset.setBackgroundColor(Color.parseColor("#485461"))
+                            var ans = weightInput.text.toString().toDouble()
+                            ans *= 220.462
+                            weightOutput.text = ("%.2f".format(ans)) + " pound"
+                            weightOutput.visibility = View.VISIBLE
+
+                        }
+                        else -> {
+
+                            weightOutput.text = "None"
+                            weightOutput.visibility = View.VISIBLE
+                        }
+                    }
+                } else {
+                    reset.isEnabled = false
+                    reset.isClickable = false
+                    reset.setBackgroundColor(Color.parseColor("#ABB8C7"))
                 }
             }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // left blank intentionally
+            }
+
+        })
+        return root
     }
 }

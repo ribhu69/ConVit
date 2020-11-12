@@ -13,7 +13,23 @@
     <string name="hello_blank_fragment">hello_blank_fragment </string>
 
     <string-array name="Length">
-        <item>kmph -> ms</item>
-        <item>ms -> kmph</item>
+        <item>m->cm</item>
+        <item>km->m</item>
+        <item>km->cm</item>
     </string-array>
+
+    <string-array name="Speed">
+        <item>kmph->ms</item>
+        <item>ms->kmph</item>
+    </string-array>
+
+    <string-array name="Weight">
+        <item>kg->g</item>
+        <item>kg->mg</item>
+        <item>pound->kg</item>
+        <item>quintal->kg</item>
+
+
+    </string-array>
+
 </resources>

@@ -1,15 +1,13 @@
 package com.example.android.convunit
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_length_.*
 
@@ -23,6 +21,10 @@ class LengthFragment : Fragment() {
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_length_, container, false)
         val spinner: Spinner = root.findViewById(R.id.length_input_spinner)
+        val reset = root.findViewById<Button>(R.id.lengthreset)
+        reset.isEnabled = false
+        reset.isClickable = false
+        reset.setBackgroundColor(Color.parseColor("#ABB8C7"))
         ArrayAdapter.createFromResource(
             context!!, R.array.Length, android.R.layout.simple_spinner_item
         ).also { adapter ->
@@ -30,36 +32,12 @@ class LengthFragment : Fragment() {
             spinner.adapter = adapter
         }
 
+        reset.setOnClickListener {
+            if (reset.isEnabled) {
+                lengthInput.text.clear()
+            }
+        }
         input = root.findViewById(R.id.lengthInput)
-/*
-        ans.setOnClickListener {
-            if((lengthInput.text).isNotEmpty())
-            {
-                when(length_input_spinner.selectedItem.toString())
-                {
-                    "kmph -> ms" -> {
-                        var ans= lengthInput.text.toString().toDouble()
-                        ans /= 3.6
-                        lengthOutput.text = ("%.2f".format(ans))
-                        lengthOutput.visibility= View.VISIBLE
-                    }
-                    "ms -> kmph" -> {
-                        var ans= lengthInput.text.toString().toDouble()
-                        ans *= 3.6
-                        lengthOutput.text = ("%.2f".format(ans))
-                        lengthOutput.visibility= View.VISIBLE
-
-                    }
-                    else-> { lengthOutput.text="None"
-                        lengthOutput.visibility=View.VISIBLE
-                    }
-                }
-            }
-            else
-            {
-                Toast.makeText(activity, "Please Enter Value", Toast.LENGTH_SHORT).show()
-            }
-        }*/
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -83,34 +61,55 @@ class LengthFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if ((lengthInput.text).isNotEmpty()) {
+                if ((lengthInput.text).toString() != "") {
                     when (length_input_spinner.selectedItem.toString()) {
-                        "kmph -> ms" -> {
+                        "m->cm" -> {
+
+                            reset.isEnabled = true
+                            reset.isClickable = true
+                            reset.setBackgroundColor(Color.parseColor("#485461"))
                             var ans = lengthInput.text.toString().toDouble()
-                            ans /= 3.6
-                            lengthOutput.text = ("%.2f".format(ans)) + " ms"
+                            ans *= 100
+                            lengthOutput.text = ("%.4f".format(ans)) + " cm"
                             lengthOutput.visibility = View.VISIBLE
                         }
-                        "ms -> kmph" -> {
+                        "km->m" -> {
+                            reset.isEnabled = true
+                            reset.isClickable = true
+                            reset.setBackgroundColor(Color.parseColor("#485461"))
                             var ans = lengthInput.text.toString().toDouble()
-                            ans *= 3.6
-                            lengthOutput.text = ("%.2f".format(ans)) + " kmph"
+                            ans *= 1000
+                            lengthOutput.text = ("%.4f".format(ans)) + " m"
                             lengthOutput.visibility = View.VISIBLE
 
                         }
+
+                        "km->cm" -> {
+                            reset.isEnabled = true
+                            reset.isClickable = true
+                            reset.setBackgroundColor(Color.parseColor("#485461"))
+                            var ans = lengthInput.text.toString().toDouble()
+                            ans *= 100000
+                            lengthOutput.text = ("%.4f".format(ans)) + " cm"
+                            lengthOutput.visibility = View.VISIBLE
+                        }
                         else -> {
+
                             lengthOutput.text = "None"
                             lengthOutput.visibility = View.VISIBLE
                         }
                     }
                 } else {
-                    lengthOutput.text = "None"
+                    reset.isEnabled = false
+                    reset.isClickable = false
+                    reset.setBackgroundColor(Color.parseColor("#ABB8C7"))
                 }
             }
 
             override fun afterTextChanged(p0: Editable?) {
                 // left blank intentionally
             }
+
         })
         return root
     }
