@@ -1,5 +1,6 @@
 package com.example.android.convunit
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -34,6 +35,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var speed: ExtendedFloatingActionButton
     private lateinit var weight: ExtendedFloatingActionButton
     private lateinit var force: ExtendedFloatingActionButton
+    private lateinit var logon: MediaPlayer
+    private lateinit var logoff: MediaPlayer
     //private lateinit var actionBar: ActionBar
 
 
@@ -137,6 +140,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.about -> {
                     //Toast.makeText(applicationContext, "Volume", Toast.LENGTH_SHORT).show()
+                    logon = MediaPlayer.create(this, R.raw.logon)
+                    logon.start()
                     aboutFragment = About_Fragment()
                     addFragmentToActivity(aboutFragment)
                 }
@@ -165,7 +170,9 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.homeIcon -> {
-                Toast.makeText(this, "Yo boii", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Yo boii", Toast.LENGTH_SHORT).show()
+                logoff = MediaPlayer.create(this, R.raw.logoff)
+                logoff.start()
                 supportActionBar?.title = "Convit"
                 mainframe.visibility = View.INVISIBLE
                 homeLayout.visibility = View.VISIBLE
@@ -178,7 +185,9 @@ class MainActivity : AppCompatActivity() {
                 mainframe.visibility = View.VISIBLE
                 aboutFragment = About_Fragment()
                 addFragmentToActivity(aboutFragment)
-                Toast.makeText(this, "About Us", Toast.LENGTH_SHORT).show()
+                logon = MediaPlayer.create(this, R.raw.logon)
+                logon.start()
+                //Toast.makeText(this, "About Us", Toast.LENGTH_SHORT).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
