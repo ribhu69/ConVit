@@ -1,5 +1,4 @@
 # ConVit©
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
 ConVit is a Unit Conversion App Written in Kotlin Language. The app is more focussed on learning and deploying some Material UI components. Some of the features in the app are:
 
